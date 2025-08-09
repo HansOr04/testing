@@ -42,6 +42,15 @@ export interface IPeriod {
 }
 
 /**
+ * Resultado de validación de rango de tiempo
+ */
+export interface ITimeRangeValidationResult {
+  isValid: boolean;
+  errors: string[];
+  warnings?: string[];
+}
+
+/**
  * Días festivos de Ecuador 2024-2025
  */
 const ECUADOR_HOLIDAYS = [
@@ -71,6 +80,64 @@ const ECUADOR_HOLIDAYS = [
   { date: '2025-11-03', name: 'Independencia de Cuenca' },
   { date: '2025-12-25', name: 'Navidad' }
 ];
+
+/**
+ * Valida un rango de tiempo
+ */
+export function validateTimeRange(startTime: string, endTime: string): ITimeRangeValidationResult {
+  const errors: string[] = [];
+  const warnings: string[] = [];
+
+  // Validar formato básico
+  const timeRegex = /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/;
+  
+  if (!timeRegex.test(startTime)) {
+    errors.push('Hora de inicio tiene formato inválido (debe ser HH:MM)');
+  }
+  
+  if (!timeRegex.test(endTime)) {
+    errors.push('Hora de fin tiene formato inválido (debe ser HH:MM)');
+  }
+
+  if (errors.length > 0) {
+    return { isValid: false, errors, warnings };
+  }
+
+  try {
+    const startMinutes = timeToMinutes(startTime);
+    const endMinutes = timeToMinutes(endTime);
+
+    // Validar que la hora de fin sea posterior a la de inicio
+    if (endMinutes <= startMinutes) {
+      errors.push('Hora de fin debe ser posterior a hora de inicio');
+    }
+
+    // Validar duración mínima (15 minutos)
+    const durationMinutes = endMinutes - startMinutes;
+    if (durationMinutes < 15) {
+      warnings?.push('Duración muy corta (menos de 15 minutos)');
+    }
+
+    // Validar duración máxima (16 horas)
+    if (durationMinutes > 16 * 60) {
+      warnings?.push('Duración muy larga (más de 16 horas)');
+    }
+
+    // Validar horarios nocturnos
+    if (startMinutes >= 22 * 60 || endMinutes <= 6 * 60) {
+      warnings?.push('Horario incluye horas nocturnas');
+    }
+
+  } catch (error) {
+    errors.push('Error al procesar las horas');
+  }
+
+  return {
+    isValid: errors.length === 0,
+    errors,
+    warnings
+  };
+}
 
 /**
  * Formatea una fecha a string en formato YYYY-MM-DD
@@ -428,6 +495,7 @@ export function isValidDateRange(date: Date): boolean {
 }
 
 export default {
+  validateTimeRange,
   formatDate,
   formatDateLocal,
   formatTime,
