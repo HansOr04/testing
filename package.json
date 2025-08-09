@@ -1,0 +1,66 @@
+{
+   "name": "sistema-asistencia-backend",
+   "version": "1.0.0",
+   "description": "Sistema de Registro de Asistencia con Integración Biométrica FACEID 360",
+   "main": "dist/index.js",
+   "scripts": {
+      "build": "tsc",
+      "start": "node dist/index.js",
+      "dev": "nodemon",
+      "dev:debug": "nodemon --inspect",
+      "test": "echo \"Pruebas pendientes de configurar\" && exit 1",
+      "lint": "eslint src/**/*.ts",
+      "lint:fix": "eslint src/**/*.ts --fix",
+      "clean": "rimraf dist",
+      "prebuild": "npm run clean"
+   },
+   "keywords": [
+      "asistencia",
+      "biometrico",
+      "faceid360",
+      "typescript",
+      "nodejs",
+      "express",
+      "sqlserver",
+      "postgresql"
+   ],
+   "author": "Sistema de Asistencia",
+   "license": "MIT",
+   "dependencies": {
+      "bcryptjs": "^3.0.2",
+      "cors": "^2.8.5",
+      "date-fns": "^4.1.0",
+      "dotenv": "^17.2.1",
+      "express": "^5.1.0",
+      "helmet": "^8.1.0",
+      "joi": "^18.0.0",
+      "jsonwebtoken": "^9.0.2",
+      "morgan": "^1.10.1",
+      "mssql": "^11.0.1",
+      "pg": "^8.16.3",
+      "uuid": "^11.1.0",
+      "zklib": "^0.2.11"
+   },
+   "devDependencies": {
+      "@types/bcryptjs": "^2.4.6",
+      "@types/cors": "^2.8.19",
+      "@types/express": "^5.0.3",
+      "@types/jsonwebtoken": "^9.0.10",
+      "@types/morgan": "^1.9.10",
+      "@types/mssql": "^9.1.7",
+      "@types/node": "^24.2.1",
+      "@types/pg": "^8.15.5",
+      "@types/uuid": "^10.0.0",
+      "@typescript-eslint/eslint-plugin": "^8.39.0",
+      "@typescript-eslint/parser": "^8.39.0",
+      "eslint": "^9.33.0",
+      "nodemon": "^3.1.10",
+      "ts-node": "^10.9.2",
+      "tsconfig-paths": "^4.2.0",
+      "typescript": "^5.9.2"
+   },
+   "engines": {
+      "node": ">=18.0.0",
+      "npm": ">=8.0.0"
+   }
+}
