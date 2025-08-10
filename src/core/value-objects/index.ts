@@ -28,6 +28,6 @@ export type {
   IEmployeeTypeOvertime,
   IEmployeeTypeValidationRules
 } from './employee-type.vo';
-export type {
-  ITimeRangeValidationResult
-} from './time-range.vo';
+
+// Re-exportar desde date.util.ts ya que TimeRange no define esta interfaz
+export type { ITimeRangeValidationResult } from '@shared/utils/date.util';

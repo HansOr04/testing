@@ -82,7 +82,8 @@ export const OVERTIME_RULES = {
     calculatesRecargo: true, // 25% (horas 9-10)
     calculatesSupplementary: true, // 50% (horas 11-12)
     calculatesExtraordinary: true, // 100% (fines de semana/feriados)
-    maxOvertimePerDay: 4
+    maxOvertimePerDay: 4,
+    effectiveHoursOnly: false // Los empleados regulares cuentan todos los días
   },
   [EmployeeType.ADMINISTRATIVO]: {
     dailyThreshold: 8,
